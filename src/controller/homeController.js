@@ -44,7 +44,34 @@ const handleUpdateUser = async (req, res) => {
     return res.redirect("/user");
 
 }
+
+const handleUserGetAPI = async (req, res) => {
+    let userList = await userService.getUserList();
+    return res.status(200).json(userList);
+}
+
+
+const handleDelteUserAPI = async (req, res) => {
+    await userService.deleteUser(req.params.id);
+    return res.status(200).json({
+        message: `User with the id = ${req.params.id} is deleted successfully!`
+    })
+}
+
+const handleCreateNewUserAPI = async (req, res) => {
+    let email = req.body.email;
+    let password = req.body.password;
+    let username = req.body.username;
+
+
+    await userService.createNewUser(email, password, username);
+
+    return res.status(200).json({
+        message: `A new User is created successfully!`
+    })
+}
+
 module.exports = {
     handleHelloWord, handleUserPage, handleCreateNewUser, handleDelteUser, getUpdateUserPage,
-    handleUpdateUser
+    handleUpdateUser, handleUserGetAPI, handleDelteUserAPI, handleCreateNewUserAPI
 }
