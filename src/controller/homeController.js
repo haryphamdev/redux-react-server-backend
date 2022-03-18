@@ -46,8 +46,11 @@ const handleUpdateUser = async (req, res) => {
 }
 
 const handleUserGetAPI = async (req, res) => {
-    let userList = await userService.getUserList();
-    return res.status(200).json(userList);
+    setTimeout(async () => {
+        let userList = await userService.getUserList();
+        return res.status(200).json(userList);
+    }, 5000)
+
 }
 
 
