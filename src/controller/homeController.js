@@ -49,7 +49,7 @@ const handleUserGetAPI = async (req, res) => {
     setTimeout(async () => {
         let userList = await userService.getUserList();
         return res.status(200).json(userList);
-    }, 5000)
+    }, 1000)
 
 }
 
@@ -57,7 +57,8 @@ const handleUserGetAPI = async (req, res) => {
 const handleDelteUserAPI = async (req, res) => {
     await userService.deleteUser(req.params.id);
     return res.status(200).json({
-        message: `User with the id = ${req.params.id} is deleted successfully!`
+        message: `User with the id = ${req.params.id} is deleted successfully!`,
+        errCode: 0
     })
 }
 
@@ -66,12 +67,14 @@ const handleCreateNewUserAPI = async (req, res) => {
     let password = req.body.password;
     let username = req.body.username;
 
+    setTimeout(async () => {
+        await userService.createNewUser(email, password, username);
 
-    await userService.createNewUser(email, password, username);
-
-    return res.status(200).json({
-        message: `A new User is created successfully!`
-    })
+        return res.status(200).json({
+            message: `A new User is created successfully!`,
+            errCode: 0
+        })
+    }, 5000)
 }
 
 module.exports = {
